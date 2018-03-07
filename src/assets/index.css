@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.coin-box{
+  border: 1px solid #ddd;
+}
+
+.deposit-align{
+  position: relative;
+  top: 3px;
+  left: 5px;
+}
+
+.tx-progress i.fa { font-size: 28px; display: block; margin-bottom: 10px;}
+.tx-progress label {
+  display: block;
+  font-size: 18px;  
+}
+
+.tx-header strong, .tx-header span {
+  font-size: 20px;
+}
+.tx-header span {
+  padding-left: 10px; 
+}
+
+.wallet-address {
+  font-size: 17px;
+  font-weight: lighter;
+  letter-spacing: 1px;
+  background: lightblue;
+  padding: 3px 15px;
+  color: #000;
+  border-radius: 3px;
+}
