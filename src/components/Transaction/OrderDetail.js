@@ -5,7 +5,7 @@ class OrderDetail extends Component {
 
     render(){       
         
-        const { deposit, withdraw, wallet_address, withdrawl_address} = this.props.tx
+        const { deposit, withdraw, wallet_address, withdrawl_address, exchange_rate } = this.props.tx
         return(
             <div className="card-body order-details">
             <h4 className="card-title text-muted">Order Details</h4>
@@ -22,7 +22,7 @@ class OrderDetail extends Component {
                         <span>&nbsp;Receive</span>
                     </h5>
                     <p className="wallet-address">{withdrawl_address}</p>
-                    <p><strong className="d-block">Final Rate</strong><span>1 BTC = 10 ETH</span></p>
+                    <p><strong className="d-block">Final Rate</strong><span>1 {deposit.symbol} = {exchange_rate} {withdraw.symbol}</span></p>
                 </div>
             </div>
         </div>
