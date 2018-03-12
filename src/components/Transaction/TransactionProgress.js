@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import { fetchTransaction, fetchTransactionSuccess } from './../../actions/transactionActions';
 import OrderDetail from './OrderDetail';
 import { connect } from 'react-redux';
+
 
 class TransactionProgress extends Component {
     componentWillMount() {
@@ -63,8 +66,12 @@ class TransactionProgress extends Component {
                                 </div>
 
                             </div>
-                            <div className="card-body">                                
-                                <p className="card-text text-right">Confirmations {data.deposit_tx_confirmations}/6</p>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-4 text-center">Created at <br /><Moment fromNow>{data.date_created}</Moment></div>
+                                    <div className="col-md-4 text-center">Update at <br /><Moment fromNow>{data.date_modified}</Moment></div>
+                                    <div className="col-md-4 text-center" title="At-least 6 confirmations">Confirmations <br /> {data.deposit_tx_confirmations}</div>
+                                </div>
                             </div>
                             <div className="card-body tx-progress">
                                 <div className="row text-center">

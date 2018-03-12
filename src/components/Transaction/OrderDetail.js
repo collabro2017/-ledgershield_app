@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {mediaUrl } from './../../utils/misc';
 
 class OrderDetail extends Component {
 
@@ -12,17 +12,17 @@ class OrderDetail extends Component {
             <div className="row">
                 <div className="col-md-12 text-muted">
                     <h5>
-                        <img width="32px" src={deposit.image} alt={deposit.name} />
+                        <img width="32px" src={mediaUrl(deposit.image)} alt={deposit.name} />
                         <span>&nbsp;Deposit</span>
                     </h5>
                     {wallet_address? <p className="wallet-address">{wallet_address}</p> : <p>Please wait generating deposit address!</p> }
                     
                     <h5>
-                        <img width="32px" src={withdraw.image} alt={withdraw.name} />
+                        <img width="32px" src={mediaUrl(withdraw.image)} alt={withdraw.name} />
                         <span>&nbsp;Receive</span>
                     </h5>
                     <p className="wallet-address">{withdrawl_address}</p>
-                    <p><strong className="d-block">Final Rate</strong><span>1 {deposit.symbol} = {exchange_rate} {withdraw.symbol}</span></p>
+                    <p><h5 className="d-block">Final Rate</h5><span>1 {deposit.symbol} = {exchange_rate} {withdraw.symbol}</span></p>
                 </div>
             </div>
         </div>
