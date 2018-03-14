@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import { fetchTransaction, fetchTransactionSuccess } from './../../actions/transactionActions';
+import { connect_socket } from './../../actions/websocket.actions';
 import OrderDetail from './OrderDetail';
 import { connect } from 'react-redux';
 
@@ -10,8 +11,9 @@ class TransactionProgress extends Component {
     componentWillMount() {
         const txid = this.props.match.params.txid
         this.props.fetchTransaction(txid);
-        const socket = new WebSocket('ws://localhost:8081/ws/tx/' + txid)
-        this.props.handleSocketEvents(socket)
+        // const socket = new WebSocket('ws://localhost:8081/ws/tx/' + txid)
+        // this.props.handleSocketEvents(socket)
+        this.props.connect_socket(txid);
     }
 
     render() {
@@ -45,7 +47,7 @@ class TransactionProgress extends Component {
         }
         const { data, loading } = this.props.transaction;
         let status;
-        if(!loading){
+        if(!loading && data !== null){
             status = progress[data.status];
         }
         return (
@@ -53,7 +55,7 @@ class TransactionProgress extends Component {
                 <div className="row justify-content-center">
                     <div className="col-md-9">
                         <h3 className="mt-3 text-center">Transaction status {loading ? (<i className="fa fa-spinner fa-spin"></i>) : null}</h3>
-                        {loading ? null : (<div className="card mt-3">
+                        {data ? (<div className="card mt-3">
                             <div className="card-header">
                                 <div className="row">
                                     <div className="col-md-9 tx-header">
@@ -89,7 +91,7 @@ class TransactionProgress extends Component {
                                 </div>
                             </div>
                             {data ? <OrderDetail tx={data} /> : null}
-                        </div>)}
+                        </div>): (<p className="text-center">Unknown transaction!</p>)}
 
                         <div className="row">
                             <div className="col-md-12">
@@ -115,18 +117,21 @@ const mapDispatchToProps = dispatch => {
         fetchTransaction: (txid) => {
             dispatch(fetchTransaction(txid));
         },
+        connect_socket: (txid) => {
+            dispatch(connect_socket(txid))
+        },
         handleSocketEvents: (socket) => {
 
             socket.onopen = (e) => {
-                console.log(e)
+                console.log(`Socket open ${e}`)
             };
 
             socket.onclose = (e) => {
-                console.log(e)
+                console.log(`Connection close ${e}`)
             }
 
             socket.onerror = (e) => {
-                console.log(e)
+                console.log(`Socket error ${e}`)
             }
 
             socket.onmessage = (e) => {

@@ -22,7 +22,7 @@ class OrderDetail extends Component {
                         <span>&nbsp;Receive</span>
                     </h5>
                     <p className="wallet-address">{withdrawl_address}</p>
-                    <p><h5 className="d-block">Final Rate</h5><span>1 {deposit.symbol} = {exchange_rate} {withdraw.symbol}</span></p>
+                    <h5 className="d-block">Final Rate</h5><span>1 {deposit.symbol} = {exchange_rate} {withdraw.symbol}</span>
                 </div>
             </div>
         </div>

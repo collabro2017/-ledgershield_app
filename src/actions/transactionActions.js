@@ -45,7 +45,7 @@ export function submitTransactionSuccessl(payload){
 export const SUBMIT_TRANSACTION_ERROR = 'SUBMIT_TRANSACTION_ERROR';
 export function submitTransactionError(payload){
   return {
-    type: submitTransactionError,
+    type: SUBMIT_TRANSACTION_ERROR,
     payload: payload
   }
 }
