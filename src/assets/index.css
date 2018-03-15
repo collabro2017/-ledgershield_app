@@ -36,3 +36,7 @@ body {
   color: #000;
   border-radius: 3px;
 }
+
+.out-remove {
+  padding: .375rem .75rem;
+}
