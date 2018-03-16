@@ -6,7 +6,7 @@ class OrderDetail extends Component {
     
     render(){       
         
-        const { deposit, withdraw, wallet_address, withdrawl_address, exchange_rate, outs } = this.props.tx
+        const { deposit, withdraw, wallet_address, exchange_rate, outs } = this.props.tx
 
         const outputs = map(outs, (out, i) => {
             return (

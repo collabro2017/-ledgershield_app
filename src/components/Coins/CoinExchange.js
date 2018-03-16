@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import map from 'lodash/map';
+import toNumber from 'lodash/toNumber'
 
 import { fetchCoins } from "./../../actions/coinActions";
 import {submitTrnsaction} from './../../actions/transactionActions';
@@ -12,7 +13,7 @@ class CoinExchange extends Component {
         this.state = {
             ...this.state,           
             outputs: [1],
-            
+            error: true,
             tx: {
                 outs: []
             }
@@ -23,6 +24,7 @@ class CoinExchange extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addOutput = this.addOutput.bind(this);
         this.removeOutput = this.removeOutput.bind(this);
+        this.validateOutputs = this.validateOutputs.bind(this);
     }
     componentWillMount() {
         this.props.fetchCoins();
@@ -33,6 +35,19 @@ class CoinExchange extends Component {
         tx[e.target.name] = e.target.value
         // console.log(tx)
         this.setState({tx})
+    }
+
+    validateOutputs() {
+        const {outs} = this.state.tx
+        let total = 0;        
+        map(outs, (out, i ) => {
+            total += out.value
+        });        
+        if (total !== 100) {
+            this.setState({error: true})
+        } else {
+            this.setState({error: false})
+        }
     }
 
 
@@ -68,20 +83,26 @@ class CoinExchange extends Component {
         e.preventDefault()
         const {tx} = this.state;
         const {outs } = this.state.tx
+        let val = e.target.value;
+        if (name === 'value')
+            val = toNumber(val);
+
         if (outs[index] !== void 0) {
-            outs[index][name] = e.target.value;
+            outs[index][name] = val            
         } else {
-            outs.push({[name]: e.target.value})
+            outs.push({[name]: val})            
         }
         tx.outs = outs;
-        this.setState({tx})
+        this.setState({tx});
+        this.validateOutputs();
     }
 
     handleSubmit(e) {
         e.preventDefault();
         
         const {tx} = this.state;
-        tx['deposit'] =this.deposit.value                
+        tx['deposit'] =this.deposit.value
+        // console.log(JSON.stringify(tx))
         this.props.submitTrnsaction(tx);
     }
 
@@ -112,7 +133,7 @@ class CoinExchange extends Component {
                     <div className="col-md-3">
                         <div className="form-group">
                             <label>{this.state.exchnage_coin_name} Share %:</label>
-                            <input name={`share_${o}`} type="text" onChange={this.handleOutputs.bind(this, i, 'value')} className="form-control" />                    
+                            <input name={`share_${o}`} type="number" onChange={this.handleOutputs.bind(this, i, 'value')} className="form-control" />                    
                         </div>
                     </div>
                     <div className="col-md-1">
@@ -157,14 +178,14 @@ class CoinExchange extends Component {
                                     </div>
                                      { this.state.exchnage_coin_name ? (
                                         <div className="text-right form-group">
-                                            <button type="button" onClick={this.addOutput} className="btn btn-info btn-sm"> 
+                                            <button type="button" onClick={this.addOutput} className="btn btn-sm btn-outline-primary"> 
                                                 <i className="fa fa-plus"></i> 
                                                 &nbsp;Add more
                                             </button>
                                         </div>
                                     ) : null}
                                     { this.state.exchnage_coin_name ? outputs : null}
-                                   <button className="btn btn-block btn-outline-primary">Start Transaction</button>
+                                    {this.state.error? <p className="text-center btn btn-block btn-outline-danger">Sum of output share must be equal to 100</p> : <button className="btn btn-block btn-outline-primary">Start Transaction</button> }
                                 </form>
                             </div>
                         </div>
