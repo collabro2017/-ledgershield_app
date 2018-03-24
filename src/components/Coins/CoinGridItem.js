@@ -8,12 +8,14 @@ class CoinGridItem extends Component {
   render(){
     const {coin} = this.props;    
     return (
-      <div className="col-md-3">
+      <div className="col-md-3 mb-3">
         <div className="card">          
           <div className="card-body">
             <img className="mb-3" src={coin.image} alt={coin.symbol} />            
             <h5 className="card-title">{coin.name}</h5>
-            <Link className="btn btn-block btn-outline-primary" to={`/exchange/${coin.symbol}`}>Deposit</Link>           
+            {coin.operational ? 
+              (<Link className="btn btn-block btn-outline-primary" to={`/exchange/${coin.symbol}`}>DEPOSIT</Link>)
+            : (<button className="btn btn-block btn-outline-warning">COMING SOON</button>)}
           </div>
         </div>
       </div>

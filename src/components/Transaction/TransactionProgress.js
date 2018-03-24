@@ -20,34 +20,52 @@ class TransactionProgress extends Component {
 
         const progress = {
             'submitted':{
-                'progress': 16.66,
-                'label': 'Transaction is submitted'
+                'progress': 25,
+                'label': 'Transaction submitted',
+                'cssClass': 'bg-info' 
             },
             'awaiting':{
                 'progress': 33.33,
-                'label': 'Waiting for deposit'
+                'label': 'Waiting for deposit',
+                'cssClass': 'bg-info' 
             },
             'waiting_for_confirmation':{
                 'progress': 50,
-                'label': 'Wating for transaction confirmation'
+                'label': 'Wating for confirmation',
+                'cssClass': 'bg-info' 
+
             },
             'deposit_received':{
                 'progress': 66.66,
-                'label': 'Wating for transaction confirmation'
+                'label': 'Deposit received',
+                'cssClass': 'bg-info' 
             },
             'exchange':{
                 'progress': 83.33,
-                'label': 'Exchanging'
+                'label': 'Exchanging',
+                'cssClass': 'bg-info' 
             },
             'completed':{
                 'progress': 100,
-                'label': 'All Done!'
+                'label': 'All Done!',
+                'cssClass': 'bg-success' 
             },
+            'out_order': {
+                'progress': 83.33,
+                'label': 'Out of order',
+                'cssClass': 'bg-warning'  
+            }
             
         }
         const { data, loading } = this.props.transaction;
-        let status;
-        if(!loading && data !== null){
+        let status = {
+            'submitted':{
+                'progress': 16.66,
+                'label': 'Transaction is submitted',
+                'cssClass': 'bg-info' 
+            }
+        };
+        if(!loading && data !== null && data.hasOwnProperty('status')){
             status = progress[data.status];
         }
         return (
@@ -82,9 +100,9 @@ class TransactionProgress extends Component {
                                         <label>{status.label}</label>
                                     </div>
                                     <div className="col-md-12 mt-3">
-                                        <div className="progress">
-                                            <div className="progress-bar progress-bar-striped progress-bar-animated" style={{ width: status.progress + '%' }}>
-                                                {status.progress}% - {status.label} 
+                                        <div className="progress ">
+                                            <div className={"progress-bar progress-bar-striped progress-bar-animated "+ (status.cssClass)} style={{ width: status.progress + '%' }} aria-valuenow={status.progress} aria-valuemin="0" aria-valuemax="100">
+                                                <span>{status.progress}% - {status.label}</span>
                                             </div>
                                         </div>
                                     </div>

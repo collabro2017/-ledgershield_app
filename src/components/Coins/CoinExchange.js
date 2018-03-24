@@ -3,8 +3,11 @@ import {connect} from "react-redux";
 import map from 'lodash/map';
 import toNumber from 'lodash/toNumber'
 
-import { fetchCoins } from "./../../actions/coinActions";
+import { fetchCoins, fetchCP } from "./../../actions/coinActions";
 import {submitTrnsaction} from './../../actions/transactionActions';
+import CoinPair from './CoinPair';
+import DestinationCoinsBox from './DestinationCoinsBox'
+import history from './../../utils/history';
 
 class CoinExchange extends Component {
 
@@ -14,20 +17,23 @@ class CoinExchange extends Component {
             ...this.state,           
             outputs: [1],
             error: true,
+            sourceCoin: this.props.match.params.depositCoin,
             tx: {
                 outs: []
             }
 
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addOutput = this.addOutput.bind(this);
         this.removeOutput = this.removeOutput.bind(this);
         this.validateOutputs = this.validateOutputs.bind(this);
+        this.handleSourceSelect = this.handleSourceSelect.bind(this);
     }
     componentWillMount() {
         this.props.fetchCoins();
+        this.props.fetchCP(this.props.match.params.depositCoin);
     }
 
     handleChange(e) {
@@ -65,8 +71,27 @@ class CoinExchange extends Component {
 
     }
 
+    handleSourceSelect(e) {
+        e.preventDefault()
+        this.handleChange(e) 
+        const selectedIndex =  e.target.options.selectedIndex;        
+        const selectedKey = e.target.options[selectedIndex].getAttribute('data-index');
+        const selectedCoin = this.props.coins.coins.results[selectedKey];
+        const symbol = selectedCoin.symbol;
+        this.props.fetchCP(symbol);
 
-    handleSelect(e){
+        let {tx, exchnage_coin_name, outputs} = this.state;
+        
+        if(exchnage_coin_name === symbol){
+            exchnage_coin_name = '';
+            tx.outs = [];
+            outputs = [1]
+        }
+        this.setState({outputs:outputs, tx:tx, exchnage_coin_name: exchnage_coin_name, sourceCoin: symbol})
+        history.replace(`/exchange/${symbol}`);
+    }
+
+    handleSelect(e){       
         this.handleChange(e)        
         const selectedIndex =  e.target.options.selectedIndex;        
         const selectedKey = e.target.options[selectedIndex].getAttribute('data-index');
@@ -75,8 +100,7 @@ class CoinExchange extends Component {
             this.setState({exchnage_coin_name: dstCoin.symbol});
         }else {
             this.setState({exchnage_coin_name: ''});
-        }
-        
+        }        
     }
 
     handleOutputs(index, name, e) {
@@ -101,26 +125,29 @@ class CoinExchange extends Component {
         e.preventDefault();
         
         const {tx} = this.state;
-        tx['deposit'] =this.deposit.value
-        // console.log(JSON.stringify(tx))
+        // tx['deposit'] =this.deposit.value
+        console.log(JSON.stringify(tx))
         this.props.submitTrnsaction(tx);
     }
 
-    render() {        
-        const { match, coins } = this.props;
-        const depositCoin = match.params.depositCoin;    
-        let depositInfo = {}
 
-        
+    
 
-        const coinsOptions = map(coins.coins.results, (item, i) => {
-            if(item.symbol === depositCoin) {
-                depositInfo = item
-                return null;
-            }  
-            return <option data-index={i} key={i} value={item.id}>{item.name}</option>
-        })
+    render() {
 
+        const {coins, cp} = this.props;        
+        let selected = ""     
+        const sourceOptions = map(coins.coins.results, (item, i) => {            
+            if(item.symbol === this.state.sourceCoin) {                
+                selected = item.id
+            }
+            
+            if(item.operational) {
+                return <option data-index={i} key={i} value={item.id}>{item.name}</option>
+            }
+            return null
+        });
+      
         const outputs = map(this.state.outputs, (o, i) => {
             return (
                 <div className="row"  key={i}>
@@ -155,28 +182,37 @@ class CoinExchange extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-8 ml-auto">
+                    <div className="col-md-4">
+                       <CoinPair items={cp} />
+                    </div>
+                    <div className="col-md-8">
                         <div className="card mt-5">
-                            <div className="card-body">
-                                <h4 className="card-title">Some nice heading ... </h4>
+                            <div className="card-header">
+                                <h5>Some nice heading...</h5>
+                            </div>
+                            <div className="card-body">                                
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
+
                                         <label>Deposit:</label>
-                                        <input name="deposit" type="hidden" ref={(input) => this.deposit = input}  defaultValue={depositInfo.id} />                    
-                                        <p className="form-control"><img width="30" src={depositInfo.image} alt={depositInfo.symbol} /> <span className="deposit-align">{depositInfo.name}</span></p>
+                                        <select value={this.state.tx.deposit? this.state.tx.deposit: selected} className="form-control" name="deposit" onChange={this.handleSourceSelect}>
+                                            <option>Choose source coin!</option>
+                                            {sourceOptions}
+                                        </select>
+                                        
                                     </div>
                                     <div className="form-group">
                                         <label>Your Refund Address:</label>
                                         <input name="rollback_wallet" type="text" className="form-control" onChange={this.handleChange} />                    
                                     </div>
                                     <div className="form-group">
-                                        <label>Receive:</label>
-                                        <select className="form-control" name="withdraw" onChange={this.handleSelect}>
-                                            <option>Choose exhcnage coin!</option>
-                                            {coinsOptions}
-                                        </select>
+                                        <label>Receive:</label>                                        
+                                        <DestinationCoinsBox 
+                                            coins={coins.coins.results} 
+                                            sourceCoin={this.state.sourceCoin}
+                                            handleChange={this.handleSelect} />
                                     </div>
-                                     { this.state.exchnage_coin_name ? (
+                                     {this.state.exchnage_coin_name ? (
                                         <div className="text-right form-group">
                                             <button type="button" onClick={this.addOutput} className="btn btn-sm btn-outline-primary"> 
                                                 <i className="fa fa-plus"></i> 
@@ -202,6 +238,7 @@ const mapStateToProps = state => {
   return {
     coins: state.coins.coinsList,
     transaction: state.transaction,
+    cp: state.cp
   };
 };
 
@@ -210,6 +247,9 @@ const mapDispatchToProps = dispatch => {
     fetchCoins: () => {
       dispatch(fetchCoins());
     },
+    fetchCP: (coin) => {
+        dispatch(fetchCP(coin))
+    }, 
     submitTrnsaction: (data) => {
         dispatch(submitTrnsaction(data));
     }

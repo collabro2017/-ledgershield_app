@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import logo from './../../assets/logo.png';
 
 class Header extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light box-shedow border-bottom">
         <div className="container">
-          <Link className="navbar-brand" to={'/'}>Ledger Shield</Link>
+          <Link className="navbar-brand" to={'/'}><img src={logo} alt="Ledger Shield" title="Ledger shield" /><small>Off The Chain</small></Link>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item active">
