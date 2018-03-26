@@ -18,7 +18,9 @@ class CoinGrid extends Component {
     const Coins = map(coins.results, (item) => <CoinGridItem key={item.id} coin={item} />)
     return(
         <div className="row">
-          {loadingindicator? <LoadingIndicator /> : error? <p>{error}</p> : Coins}
+          <div className="col-md-12">
+            {loadingindicator? <LoadingIndicator /> : error? <p>{error}</p> : (<div className="card-deck">{Coins}</div>)}
+          </div>
         </div>
     )
   }

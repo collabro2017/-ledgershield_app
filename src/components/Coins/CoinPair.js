@@ -9,7 +9,7 @@ export default class CoinPair extends Component {
         const {source, destination, rate} = item
         const src_symbol = source.symbol;
         const dst_symbol = destination.symbol;
-        const formated_rate = parseFloat(rate).toFixed(2)
+        const formated_rate = parseFloat(rate).toFixed(8)
 
         return (<li key={i} className="list-group-item">
             <span className="badge badge-info">1 {src_symbol}</span> / <span className="badge badge-info">{formated_rate} { dst_symbol}</span>
