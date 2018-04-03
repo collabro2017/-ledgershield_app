@@ -10,7 +10,7 @@ import DestinationCoinsBox from './DestinationCoinsBox'
 import history from './../../utils/history';
 
 class CoinExchange extends Component {
-
+    
     constructor(props){
         super(props);
         this.state = {
@@ -23,6 +23,7 @@ class CoinExchange extends Component {
             }
 
         };
+        this.selected_coin = 0;
         this.handleChange = this.handleChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +36,8 @@ class CoinExchange extends Component {
         this.props.fetchCoins();
         this.props.fetchCP(this.props.match.params.depositCoin);
     }
+
+    
 
     handleChange(e) {
         const {tx} = this.state;
@@ -125,6 +128,9 @@ class CoinExchange extends Component {
         e.preventDefault();
         
         const {tx} = this.state;
+        if (tx['deposit'] === undefined || tx['deposit']=== null) {
+            tx.deposit = this.selected_coin
+        }
         // tx['deposit'] =this.deposit.value
         console.log(JSON.stringify(tx))
         this.props.submitTrnsaction(tx);
@@ -136,10 +142,10 @@ class CoinExchange extends Component {
     render() {
 
         const {coins, cp} = this.props;        
-        let selected = ""     
+            
         const sourceOptions = map(coins.coins.results, (item, i) => {            
             if(item.symbol === this.state.sourceCoin) {                
-                selected = item.id
+                this.selected_coin = item.id
             }
             
             if(item.operational) {
@@ -195,7 +201,7 @@ class CoinExchange extends Component {
                                     <div className="form-group">
 
                                         <label>Deposit:</label>
-                                        <select value={this.state.tx.deposit? this.state.tx.deposit: selected} className="form-control" name="deposit" onChange={this.handleSourceSelect}>
+                                        <select value={this.state.tx.deposit? this.state.tx.deposit: this.selected_coin} className="form-control" name="deposit" onChange={this.handleSourceSelect}>
                                             <option>Choose source coin!</option>
                                             {sourceOptions}
                                         </select>

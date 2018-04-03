@@ -6,7 +6,7 @@ class OrderDetail extends Component {
     
     render(){       
         
-        const { deposit, withdraw, wallet_address, exchange_rate, outs } = this.props.tx
+        const { deposit, withdraw, wallet_address, exchange_rate, outs , destination_tag } = this.props.tx
 
         const outputs = map(outs, (out, i) => {
             return (
@@ -26,7 +26,13 @@ class OrderDetail extends Component {
                         <span>&nbsp;Deposit</span>
                     </h5>
                     {wallet_address? <p className="wallet-address">{wallet_address}</p> : <p>Please wait generating deposit address!</p> }
-                    
+                    {destination_tag> 0? (
+                        <div>
+                            <h5>Destination Tag</h5>
+                            <p><b>{destination_tag}</b></p>
+                            <p className="alert alert-warning text-center"><strong>Warning:</strong> To avoid losing your Ripple, make sure you fill in the appropriate destination tag at the end of the address!</p>
+                        </div>
+                    ): null}
                     <h5>
                         <img width="32px" src={mediaUrl(withdraw.image)} alt={withdraw.name} />
                         <span>&nbsp;Receive</span>
