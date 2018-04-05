@@ -3,7 +3,7 @@ import map from "lodash/map";
 
 export default class DestinationCoinsBox extends Component {
   render() {
-    const { coins, sourceCoin, handleChange } = this.props;
+    const { coins, handleChange } = this.props;
 
     return (
       <select className="form-control" name="withdraw" onChange={handleChange}>
@@ -11,9 +11,9 @@ export default class DestinationCoinsBox extends Component {
           {
             map(coins, (coin, i) => {
               
-              if (coin.symbol === sourceCoin) {
-                return null;
-              }
+              // if (coin.symbol === sourceCoin) {
+              //   return null;
+              // }
               
               if (coin.operational) {
                 return (

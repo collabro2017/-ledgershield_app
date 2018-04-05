@@ -81,16 +81,17 @@ class CoinExchange extends Component {
         const selectedKey = e.target.options[selectedIndex].getAttribute('data-index');
         const selectedCoin = this.props.coins.coins.results[selectedKey];
         const symbol = selectedCoin.symbol;
+        this.setState({sourceCoin: symbol})
         this.props.fetchCP(symbol);
 
-        let {tx, exchnage_coin_name, outputs} = this.state;
+        // let {tx, exchnage_coin_name, outputs} = this.state;
         
-        if(exchnage_coin_name === symbol){
-            exchnage_coin_name = '';
-            tx.outs = [];
-            outputs = [1]
-        }
-        this.setState({outputs:outputs, tx:tx, exchnage_coin_name: exchnage_coin_name, sourceCoin: symbol})
+        // if(exchnage_coin_name === symbol){
+        //     exchnage_coin_name = '';
+        //     tx.outs = [];
+        //     outputs = [1]
+        // }
+        // this.setState({outputs:outputs, tx:tx, exchnage_coin_name: exchnage_coin_name, sourceCoin: symbol})
         history.replace(`/exchange/${symbol}`);
     }
 
@@ -189,7 +190,7 @@ class CoinExchange extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-md-4">
-                       <CoinPair items={cp} />
+                       <CoinPair src={this.state.sourceCoin} items={cp} />
                     </div>
                     <div className="col-md-8">
                         <div className="card mt-5">

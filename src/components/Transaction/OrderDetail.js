@@ -9,9 +9,15 @@ class OrderDetail extends Component {
         const { deposit, withdraw, wallet_address, exchange_rate, outs , destination_tag } = this.props.tx
 
         const outputs = map(outs, (out, i) => {
+            const title = out.amount > 0 ? `${out.amount} ${withdraw.symbol}`: "";
+            const explorer_url =`${withdraw.block_explorer_url}${out.tx_hash}`
             return (
-                <p key={i}  className="wallet-address">
-                    {out.address} <span className="badge badge-light">{out.value}%</span></p>
+                <div key={i} className="wallet-address mb-3" title={title}>
+                    <span className="address mb-1 align-middle">
+                        {out.address} <span className="badge badge-light" >{out.value}%</span>
+                    </span>
+                    <span className="float-right">{out.tx_hash?<a className="btn btn-sm btn-outline-success" target="_blank" href={explorer_url}>View at explorer</a>: null}</span>
+                </div>
             ) 
         })
 
@@ -25,7 +31,9 @@ class OrderDetail extends Component {
                         <img width="32px" src={mediaUrl(deposit.image)} alt={deposit.name} />
                         <span>&nbsp;Deposit</span>
                     </h5>
-                    {wallet_address? <p className="wallet-address">{wallet_address}</p> : <p>Please wait generating deposit address!</p> }
+                    <div className="mb-3">
+                        {wallet_address? <p className="wallet-address address">{wallet_address}</p> : <p className="alert alert-warning">Please wait generating deposit address!</p> }
+                    </div>
                     {destination_tag> 0? (
                         <div>
                             <h5>Destination Tag</h5>

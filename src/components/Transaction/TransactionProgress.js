@@ -16,6 +16,10 @@ class TransactionProgress extends Component {
         this.props.connect_socket(txid);
     }
 
+    CreateBookmarkLink(){
+        alert('Please press CTRL+B (or Command+D for macs) to bookmark this page.');
+    }
+
     render() {
 
         const progress = {
@@ -81,7 +85,7 @@ class TransactionProgress extends Component {
                                         <span className="align-middle">{data.order_id}</span>
                                     </div>
                                     <div className="col-md-3 text-right">
-                                        <button className="btn btn-sm btn-info">bookmark</button>
+                                        <button className="btn btn-sm btn-info" onClick={this.CreateBookmarkLink}>bookmark</button>
                                     </div>
                                 </div>
 

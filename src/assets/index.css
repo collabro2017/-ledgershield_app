@@ -38,13 +38,15 @@ body {
 .wallet-address {
   font-size: 17px;
   font-weight: lighter;
-  letter-spacing: 1px;
-  background: lightblue;
-  padding: 3px 15px;
+  background: #efefef;
+  padding: 10px 15px;
   color: #000;
-  border-radius: 3px;
+  margin: 0;
 }
 
+.address{  
+  letter-spacing: 1px;
+}
 .out-remove {
   padding: .375rem .75rem;
 }
