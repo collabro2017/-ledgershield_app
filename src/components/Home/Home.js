@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import CoinGrid from "./../Coins/CoinGrid";
 // import default_image from "./../../assets/default.svg";
 import hacker_spy from "./../../assets/hackerspy.jpg";
@@ -12,16 +13,11 @@ class Home extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-12 mb-5 text-center">
-            <h3 className="pt-5 pb-5 ">
-              Which coins do you want to exchange?{" "}
-            </h3>
+            <h3 className="pt-5 pb-5 ">Which coins do you want to exchange?</h3>
             <CoinGrid />
           </div>
           <div className="col-md-12 pb-5">
-            <h4 className="pb-5 text-center">
-              Why should I trade on Ledger Shield?{" "}
-            </h4>
-
+            <h3 className="pb-5 text-center">Why should I trade on Ledger Shield?</h3>
             <div className="card-deck">
               <div className="card">
                 <img
@@ -29,7 +25,7 @@ class Home extends Component {
                   src={hacker_spy}
                   alt="hacker spy"
                 />
-                <div className="card-body pt-3 text-center text-size-88">
+                <div className="card-body pt-3 text-center">
                   <p className="card-text">
                     We pay you instantly so there is no central exchange that
                     can get hacked.<br />
@@ -41,7 +37,7 @@ class Home extends Component {
 
               <div className="card">
                 <img className="card-img-top" src={bank_graphic} alt="banks" />
-                <div className="card-body pt-3 text-center text-size-88">
+                <div className="card-body pt-3 text-center">
                   <p className="card-text">
                     Major exchanges and their custodial banks track your coins
                     from the moment you buy them. Doin something they don't
@@ -57,7 +53,7 @@ class Home extends Component {
                   src={security_graphic}
                   alt="security"
                 />
-                <div className="card-body pt-3 text-center text-size-88">
+                <div className="card-body pt-3 text-center">
                   <p className="card-text">
                     Want anonymity without exchanging currency? The coins you
                     will receive are purchased on the open market by us, they
@@ -69,7 +65,7 @@ class Home extends Component {
               <div className="card">
                 <img className="card-img-top" src={no_logs} alt="no logs" />
                 <div className="card-body pt-3 text-center">
-                  <p className="card-text text-size-88">
+                  <p className="card-text">
                     We require no indentifying information, and purge all
                     transaction history daily. Need to reach our support team?
                     You are identified only by your transaction ID# which we log
@@ -78,6 +74,7 @@ class Home extends Component {
                 </div>
               </div>
             </div>
+            <p className="mt-3 text-center">Visit our <Link to={'/about'}>about</Link> page for information on how Ledger Shield works, and our <Link to={'/faq'}>FAQ</Link> page to learn why it’s the only way to make your transactions private.</p>
           </div>
         </div>
       </div>

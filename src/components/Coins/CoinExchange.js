@@ -195,7 +195,7 @@ class CoinExchange extends Component {
                     <div className="col-md-8">
                         <div className="card mt-5">
                             <div className="card-header">
-                                <h5>Some nice heading...</h5>
+                                <h5>Privacy Made Easy</h5>
                             </div>
                             <div className="card-body">                                
                                 <form onSubmit={this.handleSubmit}>

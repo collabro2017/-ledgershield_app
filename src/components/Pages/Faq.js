@@ -5,7 +5,7 @@ export default class Faq extends Component {
     render() {
         return(<div className="container">
             <div className="row">
-                <div class="col-md-12 mt-5 mb-5">
+                <div className="col-md-12 mt-5 mb-5">
                     <h2 className="text-left mb-3">Frequently asked questions (FAQ)</h2>
                     <p>Why does exchanging currency matter when staying anonymous using crypto?</p>
                     <p>The biggest tracking companies only track transactions across the Bitcoin blockchain.</p> 

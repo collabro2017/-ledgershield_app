@@ -4,11 +4,17 @@ import { ROOT_URL } from "./../constants/app";
 export const FETCH_COINS = "FETCH_COINS";
 export function fetchCoins() {
   return function action(dispatch) {
+    dispatch({
+      type:FETCH_COINS,
+      payload: null
+    })
     const request = axios({
       method: "get",
       url: `${ROOT_URL}/coins/list/`,
       headers: []
     });
+
+  
 
     request
       .then(response => {
@@ -17,7 +23,7 @@ export function fetchCoins() {
       .catch(err => {
         dispatch(
           fetchCoinsError(
-            "Error while fetching supported coins list from server!"
+            "Error occured while fetching supported coins list from server!"
           )
         );
       });
@@ -28,6 +34,7 @@ export function fetchCoins() {
     };
   };
 }
+
 
 export const FETCH_COINS_SUCCESS = "FETCH_COINS_SUCCESS";
 export function fetchCoinsSuccess(data) {

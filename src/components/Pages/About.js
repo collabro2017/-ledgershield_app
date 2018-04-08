@@ -20,7 +20,7 @@ export default class About extends Component {
                 <div className="card-deck">
                   <div className="card">
                     <div className="card-body">
-                      <p class="card-text">
+                      <p className="card-text">
                         You choose which coins you want. Tell us where to send
                         them. Send us your coins and track the whole process in
                         real time!
@@ -29,7 +29,7 @@ export default class About extends Component {
                   </div>
                   <div className="card">
                     <div className="card-body">
-                      <p class="card-text">
+                      <p className="card-text">
                         We sell your coins through tons of wallets and addresses
                         to numerous global liquidity providers, and exchange
                         fresh coins on the open market multiple times before
@@ -40,7 +40,7 @@ export default class About extends Component {
                   </div>
                   <div className="card">
                     <div className="card-body">
-                      <p class="card-text">
+                      <p className="card-text">
                         Right after we receive your coins the exchange rate is
                         locked-in, and send you the coins you want to the
                         addresses you provided.
@@ -50,11 +50,7 @@ export default class About extends Component {
                 </div>
               </div>
             </div>
-            <p>
-              Chainalysis, Elliptic, and other tracking companies currently only
-              track the Bitcoin <br />blockchain which exposes mixers to greate
-              risk! <br />We give you the privacy you deserve.
-            </p>
+            <p>Chainalysis and Elliptic can track you through tumblers and even swapping currencies. <br />Using a tumbler or altcoins alone does not make you safe! <strong>We make tracking virtually impossible.</strong></p>
           </div>
         </div>
       </div>

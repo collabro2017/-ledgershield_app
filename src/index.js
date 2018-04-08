@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 
-import logger from "redux-logger";
+// import logger from "redux-logger";
 import thunk from 'redux-thunk';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,8 +17,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-     applyMiddleware(thunk, logger)
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    applyMiddleware(thunk)
 )
 
 ReactDOM.render(

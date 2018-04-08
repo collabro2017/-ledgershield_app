@@ -5,7 +5,7 @@ import App from './components/App/App';
 import Home from './components/Home/Home';
 import CoinExchange from './components/Coins/CoinExchange';
 import TransactionProgress from './components/Transaction/TransactionProgress';
-import { About, Faq, Fee } from './components/Pages';
+import { About, Faq, Fee, ContactUs } from './components/Pages';
 
 export default class AppRoutes extends Component {
   render(){
@@ -18,6 +18,7 @@ export default class AppRoutes extends Component {
                 <Route path='/about' component={About} />
                 <Route path='/faq' component={Faq} />
                 <Route path='/service-fee' component={Fee} />
+                <Route path='/contact-us' component={ContactUs} />
               </Switch>
           </App>
         )
