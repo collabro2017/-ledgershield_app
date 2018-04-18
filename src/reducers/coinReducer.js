@@ -16,7 +16,6 @@ export const coinReducer = (state =  INITIAL_STATE, action) => {
         state =  {...state, coinsList: { coins:[], error: null, loading: true }}
       break;
     case FETCH_COINS_SUCCESS:
-        console.log(action.payload.data)
         state =  {...state, coinsList:{ coins: action.payload.data, error:null, loading: false}}
         break;
     case  FETCH_COINS_ERROR:
